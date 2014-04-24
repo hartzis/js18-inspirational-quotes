@@ -42,12 +42,16 @@ body
 .star
 	size 14px
 	color secondColor
-	border 1px solid secondColor
-	border-radius 50%
+	border-top 1px solid secondColor
+	border-bottom 1px solid secondColor
+	// border-radius 50%
+	cursor: pointer
 	&:hover
 		color hoveredColor
-		border 1px solid hoveredColor
+	&:first-child
+		border-left: 1px solid secondColor
+	&:last-child
+		border-right: 1px solid secondColor
 
 .rated
 	color staredColor
-	border 1px solid staredColor

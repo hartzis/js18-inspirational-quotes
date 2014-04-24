@@ -24,7 +24,7 @@ var Quote = (function() {
         var quoteAuthor = ('<div class="author"><em>{author}</em></div>'.supplant(this));
 
         // render rate box dom element
-        this.renderRateBox();
+        this.renderRateBox(0);
 
         // create full quote dom element
         this._renderedObject.append(quoteBox.append(theQuote), quoteFoot.append(quoteAuthor, this._renderedRateBox));
@@ -32,17 +32,23 @@ var Quote = (function() {
         return this._renderedObject;
 
     };
-
-    Quote.prototype.renderRateBox = function() {
+    // render rating box
+    Quote.prototype.renderRateBox = function(rating) {
         this._renderedRateBox = $('<div class="rate-box"></div>');
-        var stars = $('<span class="star rated">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>');
+        var stars = $('<span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>');
         this._renderedRateBox.append(stars);
+
     };
-    Quote.prototype.setRating = function(rating) {
-        // for (var i = 1; i <= rating; i++) {
-        //     Things[i]
-        // };
-            };
+    Quote.prototype.setRateBox = function(rating) {
+        this._rating = rating;
+        // clear all ratings before setting new ones
+        this._renderedRateBox.find('span').removeClass('rated');
+        // cycle through all stars and highlight based on rating
+        for (var i = 1; i <= rating; i++) {
+            this._renderedRateBox.find('span:nth-child(' + i + ')').addClass('rated');
+        };
+    };
+
     Quote.prototype.updateQuote = function(author, fullQuote) {
         // body...
     };
@@ -66,6 +72,12 @@ var QuoteList = (function() {
         this.quotes.unshift(quote);
         this.renderQuotes();
     };
+    QuoteList.prototype.sortQuotes = function() {
+        this.quotes.sort(function(a, b) {
+            return a._rating <= b._rating ? 1 : -1;
+        });
+        this.renderQuotes();
+    };
     return QuoteList;
 })();
 
@@ -75,16 +87,24 @@ var homer = new Quote('Homer Simpson', 'Oh, so they have internet on computers n
 var plato = new Quote('Plato', 'At the touch of love everyone becomes a poet.')
 var yoda = new Quote('Yoda', 'When nine hundred years old you reach, look as good you will not.')
 
+var allQuotes = new QuoteList($('.all-quotes-container'));
 
+allQuotes.addQuote(carlS);
+allQuotes.addQuote(homer);
+allQuotes.addQuote(plato);
+allQuotes.addQuote(yoda);
 
 $(document).on('ready', function() {
 
-    var allQuotes = new QuoteList($('.all-quotes-container'));
-
-    allQuotes.addQuote(carlS);
-    allQuotes.addQuote(homer);
-    allQuotes.addQuote(plato);
-    allQuotes.addQuote(yoda);
+    $(document).on('click', '.star', function() {
+        var newRating = $(this).index() + 1;
+        quoteContainer = $(this).closest('.quote-container');
+        var theStaredQuote = allQuotes.quotes.filter(function(a) {
+            return a._renderedObject.get(0) === quoteContainer.get(0)
+        })[0];
+        theStaredQuote.setRateBox(newRating);
+        allQuotes.sortQuotes();
+    })
 
 
 

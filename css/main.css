@@ -34,14 +34,19 @@ body {
 .star {
   size: 14px;
   color: #aaa;
-  border: 1px solid #aaa;
-  border-radius: 50%;
+  border-top: 1px solid #aaa;
+  border-bottom: 1px solid #aaa;
+  cursor: pointer;
 }
 .star:hover {
   color: #000;
-  border: 1px solid #000;
+}
+.star:first-child {
+  border-left: 1px solid #aaa;
+}
+.star:last-child {
+  border-right: 1px solid #aaa;
 }
 .rated {
   color: #ff0;
-  border: 1px solid #ff0;
 }
