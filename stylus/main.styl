@@ -1,7 +1,9 @@
 mainColor = #5be
 secondColor = #aaa
 headColor = #eee
-quotecolor = #fff
+quoteColor = #fff
+staredColor = #ff0
+hoveredColor = #000
 
 .main-container
 	margin: 0 auto
@@ -16,11 +18,11 @@ body
 	background-color: mainColor
 
 .quote
-	color quotecolor
+	color quoteColor
 	line-height: 55px
 
 .author
-	color quotecolor *2
+	color quoteColor *2
 	text-align left
 	display: inline-block
 	width 45%
@@ -37,3 +39,15 @@ body
 	padding 10px
 	// border-radius: 10px
 
+.star
+	size 14px
+	color secondColor
+	border 1px solid secondColor
+	border-radius 50%
+	&:hover
+		color hoveredColor
+		border 1px solid hoveredColor
+
+.rated
+	color staredColor
+	border 1px solid staredColor

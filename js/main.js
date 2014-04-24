@@ -2,40 +2,90 @@
 
 var Quote = (function() {
 
-        function Quote(author, fullQuote) {
-            this.author = author;
-            this.quote = fullQuote;
-            this._renderedObject = null;
-            this._rating = null;
-            this._rateBox = null;
-        };
-        Quote.prototype.render = function() {
-            this._renderedObject = $('<div class="quote-container"></div>');
+    function Quote(author, fullQuote) {
+        this.author = author;
+        this.quote = fullQuote;
+        this._renderedObject = null;
+        this._renderedRateBox = null;
+        this._rating = 0;
+        this.render();
+    };
+    Quote.prototype.render = function() {
 
-            var quoteBox = $('<div class="quote-box"></div>');
-            var theQuote = $('<strong class="quote">{0}</strong>'.supplant(this.quote));
+        // render initial quote object
+        this._renderedObject = $('<div class="quote-container"></div>');
+        console.log('created:', this._renderedObject)
 
-            var quoteFoot = $('<div class="quote-foot"></div>');
-            var quoteAuthor = ('<div class="author"><em>{0}</em></div>'.supplant(this.author));
-            // get rate box dom element
+        var quoteBox = $('<div class="quote-box"></div>');
+        var theQuote = $('<strong class="quote">{quote}</strong>'.supplant(this));
+        console.log('created:', quoteBox, theQuote);
 
-            // create full quote dom element
-            _renderedObject.append(quoteBox.append(theQuote), quoteFoot.append(quoteAuthor, !rateBox!);
+        var quoteFoot = $('<div class="quote-foot"></div>');
+        var quoteAuthor = ('<div class="author"><em>{author}</em></div>'.supplant(this));
 
+        // render rate box dom element
+        this.renderRateBox();
 
+        // create full quote dom element
+        this._renderedObject.append(quoteBox.append(theQuote), quoteFoot.append(quoteAuthor, this._renderedRateBox));
+
+        return this._renderedObject;
+
+    };
+
+    Quote.prototype.renderRateBox = function() {
+        this._renderedRateBox = $('<div class="rate-box"></div>');
+        var stars = $('<span class="star rated">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>');
+        this._renderedRateBox.append(stars);
+    };
+    Quote.prototype.setRating = function(rating) {
+        // for (var i = 1; i <= rating; i++) {
+        //     Things[i]
+        // };
             };
-            return Quote;
-        })();
+    Quote.prototype.updateQuote = function(author, fullQuote) {
+        // body...
+    };
+    return Quote;
+})();
 
-    // create list of quotes
+// create list of quotes
 
-    var QuoteList = (function() {
-        function QuoteList($target) {
-            this.$target = $target;
+var QuoteList = (function() {
+    function QuoteList($target) {
+        this.$target = $target;
+        this.quotes = [];
+    };
+    QuoteList.prototype.renderQuotes = function() {
+        this.$target.empty();
+        for (var i = 0; i < this.quotes.length; i++) {
+            this.$target.append(this.quotes[i]._renderedObject);
         };
-        return QuoteList;
-    })();
+    };
+    QuoteList.prototype.addQuote = function(quote) {
+        this.quotes.unshift(quote);
+        this.renderQuotes();
+    };
+    return QuoteList;
+})();
 
-    $(document).on('ready', function() {
+// create a bunch of starting quotes
+var carlS = new Quote('Carl Sagan', 'Somewhere, something incredible is waiting to be known.');
+var homer = new Quote('Homer Simpson', 'Oh, so they have internet on computers now!');
+var plato = new Quote('Plato', 'At the touch of love everyone becomes a poet.')
+var yoda = new Quote('Yoda', 'When nine hundred years old you reach, look as good you will not.')
 
-    });
+
+
+$(document).on('ready', function() {
+
+    var allQuotes = new QuoteList($('.all-quotes-container'));
+
+    allQuotes.addQuote(carlS);
+    allQuotes.addQuote(homer);
+    allQuotes.addQuote(plato);
+    allQuotes.addQuote(yoda);
+
+
+
+});

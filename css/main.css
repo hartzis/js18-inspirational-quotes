@@ -31,3 +31,17 @@ body {
   width: 85%;
   padding: 10px;
 }
+.star {
+  size: 14px;
+  color: #aaa;
+  border: 1px solid #aaa;
+  border-radius: 50%;
+}
+.star:hover {
+  color: #000;
+  border: 1px solid #000;
+}
+.rated {
+  color: #ff0;
+  border: 1px solid #ff0;
+}
