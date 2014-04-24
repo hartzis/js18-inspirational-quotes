@@ -1,0 +1,33 @@
+.main-container {
+  margin: 0 auto;
+  width: 75%;
+  text-align: center;
+}
+.title {
+  border-bottom: 2px solid #bbb;
+  color: #eee;
+}
+body {
+  background-color: #5be;
+}
+.quote {
+  color: #fff;
+  line-height: 55px;
+}
+.author {
+  color: #fff;
+  text-align: left;
+  display: inline-block;
+  width: 45%;
+}
+.rate-box {
+  display: inline-block;
+}
+.quote-container {
+  margin: 10px auto;
+  background-color: #62d7ff;
+  border-bottom: 5px solid #bbb;
+  border-right: 5px solid #bbb;
+  width: 85%;
+  padding: 10px;
+}
