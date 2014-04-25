@@ -84,6 +84,7 @@ var QuoteList = (function() {
     };
     QuoteList.prototype.removeQuote = function(quote) {
         this._lastRemovedQuote = this.quotes.splice(this.quotes.indexOf(quote), 1)[0];
+        this.renderQuotes();
     };
     QuoteList.prototype.restoreLastQuote = function() {
         this.addQuote(this._lastRemovedQuote);
@@ -121,7 +122,6 @@ $(document).on('ready', function() {
             return a._renderedObject.get(0) === quoteContainer.get(0)
         })[0];
         allQuotes.removeQuote(theStaredQuote);
-        allQuotes.sortQuotes();
     });
     $(document).on('click', '.add', function() {
         $('.outside').toggle();
