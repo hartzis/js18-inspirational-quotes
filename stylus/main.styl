@@ -1,7 +1,7 @@
 mainColor = #5be
 secondColor = #aaa
-headColor = #eee
-quoteColor = #fff
+headColor = #ddd
+quoteColor = #eee
 staredColor = #ff0
 hoveredColor = #000
 
@@ -13,6 +13,7 @@ hoveredColor = #000
 .title
 	border-bottom: 2px solid secondColor *1.1
 	color headColor
+	padding-bottom: 10px
 
 body
 	background-color: mainColor
@@ -30,28 +31,95 @@ body
 .rate-box
 	display: inline-block
 
-.quote-container
-	margin 10px auto
+.quote-content
 	background-color mainColor *1.15
-	border-bottom: 5px solid secondColor *1.1
-	border-right: 5px solid secondColor *1.1
-	width 85%
 	padding 10px
-	// border-radius: 10px
+	z-index: 1
+	position: relative
+
+.menu-container
+	position: fixed
+	background-color: mainColor * 1.15
+	right: 0;
+	box-shadow: -7px -7px secondColor*1.1
+	padding: 10px;
+
+.button
+	color quoteColor
+	background-color: mainColor * 1.15
+	margin 4px
+	border-top 1px solid secondColor *1.1
+	border-left 1px solid secondColor *1.1
+	border-right: 3px solid secondColor
+	border-bottom: 3px solid secondColor
+
+.quote-container
+	margin 15px auto
+	position: relative
+	width 85%
+	box-shadow: -7px -7px secondColor*1.1
+
+	// &:before
+	// 	z-index: 0
+	// 	content ''
+	// 	width 100%
+	// 	height 100%
+	// 	position: absolute
+	// 	top 5px
+	// 	left 5px
+	// 	background-color: secondColor *1.1
+	// 	display: block
 
 .star
 	size 14px
-	color secondColor
-	border-top 1px solid secondColor
-	border-bottom 1px solid secondColor
-	// border-radius 50%
+	color quoteColor
+	border-top 1px solid quoteColor
+	border-bottom 1px solid quoteColor
 	cursor: pointer
+	padding 2px
 	&:hover
 		color hoveredColor
 	&:first-child
-		border-left: 1px solid secondColor
+		border-left: 1px solid quoteColor
+		padding-left: 4px
 	&:last-child
-		border-right: 1px solid secondColor
+		border-right: 1px solid quoteColor
+		padding-right: 4px
 
 .rated
 	color staredColor
+
+.outside
+	display none
+	position: absolute
+	top 0
+	left 0
+	width 100%
+	height 100%
+	background-color mainColor
+	z-index 5
+
+.middle
+	position: relative
+	padding-top 200px
+
+.center
+	margin 0 auto
+	width 250px
+	text-align: center
+	background-color: mainColor * 1.15
+	box-shadow: -7px -7px secondColor*1.1
+	padding: 10px;
+	
+
+.in-container
+	margin 5px
+
+.remove
+	position: absolute
+	right: 0;
+	bottom: 0;
+	padding: 3px;
+	color quoteColor
+	border 1px solid quoteColor
+	cursor: pointer

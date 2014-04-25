@@ -14,20 +14,23 @@ var Quote = (function() {
 
         // render initial quote object
         this._renderedObject = $('<div class="quote-container"></div>');
-        console.log('created:', this._renderedObject)
+
+        var quoteContent = $('<div class="quote-content"></div>');
 
         var quoteBox = $('<div class="quote-box"></div>');
-        var theQuote = $('<strong class="quote">{quote}</strong>'.supplant(this));
-        console.log('created:', quoteBox, theQuote);
+        var theQuote = $('<span class="quote">{quote}</span>'.supplant(this));
 
         var quoteFoot = $('<div class="quote-foot"></div>');
-        var quoteAuthor = ('<div class="author"><em>{author}</em></div>'.supplant(this));
+        var quoteAuthor = $('<div class="author"><em>{author}</em></div>'.supplant(this));
+
+        var closeButton = $('<div class="remove">✖</div>');
 
         // render rate box dom element
         this.renderRateBox(0);
 
         // create full quote dom element
-        this._renderedObject.append(quoteBox.append(theQuote), quoteFoot.append(quoteAuthor, this._renderedRateBox));
+        quoteContent.append(quoteBox.append(theQuote), quoteFoot.append(quoteAuthor, this._renderedRateBox), closeButton);
+        this._renderedObject.append(quoteContent);
 
         return this._renderedObject;
 
@@ -61,6 +64,7 @@ var QuoteList = (function() {
     function QuoteList($target) {
         this.$target = $target;
         this.quotes = [];
+        this._lastRemovedQuote = null
     };
     QuoteList.prototype.renderQuotes = function() {
         this.$target.empty();
@@ -74,8 +78,15 @@ var QuoteList = (function() {
     };
     QuoteList.prototype.sortQuotes = function() {
         this.quotes.sort(function(a, b) {
-            return a._rating <= b._rating ? 1 : -1;
+            return a._rating < b._rating ? 1 : -1;
         });
+        this.renderQuotes();
+    };
+    QuoteList.prototype.removeQuote = function(quote) {
+        this._lastRemovedQuote = this.quotes.splice(this.quotes.indexOf(quote), 1)[0];
+    };
+    QuoteList.prototype.restoreLastQuote = function() {
+        this.addQuote(this._lastRemovedQuote);
         this.renderQuotes();
     };
     return QuoteList;
@@ -103,6 +114,35 @@ $(document).on('ready', function() {
             return a._renderedObject.get(0) === quoteContainer.get(0)
         })[0];
         theStaredQuote.setRateBox(newRating);
+    });
+    $(document).on('click', '.remove', function() {
+        quoteContainer = $(this).closest('.quote-container');
+        var theStaredQuote = allQuotes.quotes.filter(function(a) {
+            return a._renderedObject.get(0) === quoteContainer.get(0)
+        })[0];
+        allQuotes.removeQuote(theStaredQuote);
+        allQuotes.sortQuotes();
+    });
+    $(document).on('click', '.add', function() {
+        $('.outside').toggle();
+    });
+    $(document).on('click', '.submit', function() {
+        $('.outside').toggle();
+        if (($('#get-author').val() === '') || ($('#get-quote').val() === '')) {
+            console.log("nothing added");
+        } else {
+
+            var author = $('#get-author').val();
+            var quote = $('#get-quote').val();
+            console.log('make this:', author, quote);
+            $('#get-author').val('');
+            $('#get-quote').val('');
+            allQuotes.addQuote(new Quote(author, quote));
+        }
+
+        return false;
+    });
+    $(document).on('click', '.sort', function() {
         allQuotes.sortQuotes();
     })
 
